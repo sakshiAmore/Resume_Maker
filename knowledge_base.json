@@ -1,0 +1,106 @@
+{
+  "profile": {
+    "name": "Sakshi More",
+    "location": "Panvel, Maharashtra",
+    "phone": "+91 8454866503",
+    "email": "sakshi.more2404@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/sakshi-more-223a44299",
+    "github": "https://github.com/sakshiAmore"
+  },
+  "summary_source": "Data Analyst and AI/ML Engineer with experience in data analytics, machine learning, and Generative AI. Proficient in Python, SQL, Power BI, and LLM-based frameworks, with a proven ability to build predictive models, deliver actionable insights, and develop AI-driven solutions. Skilled in leveraging data to support business decision-making, improve operational efficiency, and drive measurable outcomes.",
+  "skills": {
+    "Languages": ["Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn)", "SQL", "PySpark (familiar)", "Hive (familiar)"],
+    "Machine Learning": ["Logistic/Linear Regression", "Decision Trees", "Random Forest", "SVM", "KNN", "Gradient Boosting", "Clustering", "Isolation Forest"],
+    "GenAI/NLP": ["LangChain", "RAG", "Prompt Engineering", "FAISS", "LangChain agent", "ReAct Agent"],
+    "Cloud": ["AWS (Certification in Progress)", "Amazon S3", "EC2", "IAM", "Lambda", "CloudWatch (familiar)"],
+    "Tools": ["Power BI", "Git"],
+    "Databases": ["MySQL", "SQL Server", "MongoDB", "MS SQL Server"],
+    "Concepts": ["Data Analysis", "Statistical Analysis", "Testing", "Data Visualization", "Feature Engineering", "Model Evaluation"],
+    "Data Visualization": ["Power BI (Dashboards, KPI Tracking)", "Matplotlib", "Seaborn"]
+  },
+  "experience": [
+    {
+      "id": "exp_idbi",
+      "company": "IDBI Intech",
+      "role": "Data Scientist Intern (AML Department)",
+      "dates": "Dec 2025 – Apr 2026",
+      "bullets": [
+        {"id": "exp_idbi_1", "text": "Built anomaly detection models (Isolation Forest), improving fraud detection accuracy by 10–12%", "tags": ["machine learning", "anomaly detection", "fraud detection", "isolation forest", "AML"]},
+        {"id": "exp_idbi_2", "text": "Reduced false positives by 12–15%, enhancing compliance monitoring efficiency", "tags": ["compliance", "model tuning", "AML", "risk"]},
+        {"id": "exp_idbi_3", "text": "Processed 100K+ transactions using SQL and Python with RFM-based pipelines", "tags": ["SQL", "python", "data pipelines", "RFM", "large-scale data"]},
+        {"id": "exp_idbi_4", "text": "Automated reporting workflows, reducing manual effort by 40%", "tags": ["automation", "reporting", "efficiency"]}
+      ]
+    },
+    {
+      "id": "exp_unified",
+      "company": "Unified Mentor",
+      "role": "Data Analyst Intern",
+      "dates": "May 2024 – Jul 2024",
+      "bullets": [
+        {"id": "exp_unified_1", "text": "Analyzed 100K+ records using Python and SQL to extract actionable business insights", "tags": ["data analysis", "python", "SQL", "business insights"]},
+        {"id": "exp_unified_2", "text": "Developed Power BI dashboards for KPI tracking and performance monitoring", "tags": ["power bi", "dashboards", "kpi", "data visualization"]},
+        {"id": "exp_unified_3", "text": "Automated reporting pipelines, saving 10+ hours per week", "tags": ["automation", "reporting", "efficiency"]}
+      ]
+    },
+    {
+      "id": "exp_aot",
+      "company": "AoT Solutions",
+      "role": "Software Engineer Intern",
+      "dates": "Jul 2022 – Aug 2022",
+      "bullets": [
+        {"id": "exp_aot_1", "text": "Optimized SQL queries, improving execution time by 20%", "tags": ["SQL", "performance optimization", "backend"]},
+        {"id": "exp_aot_2", "text": "Improved backend performance and database efficiency for faster data retrieval", "tags": ["backend", "databases", "performance"]}
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj_chatbot",
+      "name": "LLM-Based AI Chatbot",
+      "stack": "Python, Flask, LangChain, FAISS, Groq, MongoDB",
+      "bullets": [
+        {"id": "proj_chatbot_1", "text": "Developed an AI-powered chatbot using LangChain, Groq Llama 3.3-70B, and a FAISS-based Retrieval-Augmented Generation (RAG) pipeline for semantic document retrieval", "tags": ["langchain", "rag", "faiss", "genai", "llm", "groq"]},
+        {"id": "proj_chatbot_2", "text": "Built a LangChain agent with custom retrieval and calculator tools, enabling context-aware question answering, mathematical computations, and multi-turn conversations", "tags": ["langchain agent", "react agent", "genai", "tool use"]},
+        {"id": "proj_chatbot_3", "text": "Designed and deployed Flask REST APIs, integrated MongoDB for persistent conversation history and session management, and implemented dynamic prompt construction using retrieved context", "tags": ["flask", "rest api", "mongodb", "prompt engineering"]}
+      ]
+    },
+    {
+      "id": "proj_aml",
+      "name": "AML Fraud Detection System",
+      "stack": "Machine Learning",
+      "bullets": [
+        {"id": "proj_aml_1", "text": "Developed ML models (Logistic Regression, SVM, Gradient Boosting)", "tags": ["machine learning", "classification", "fraud detection"]},
+        {"id": "proj_aml_2", "text": "Achieved 90-95% accuracy through feature engineering and hyperparameter tuning", "tags": ["feature engineering", "hyperparameter tuning", "model accuracy"]},
+        {"id": "proj_aml_3", "text": "Improved precision and recall using robust evaluation techniques, 0.72 ROC-AUC", "tags": ["model evaluation", "precision recall", "roc-auc"]}
+      ]
+    },
+    {
+      "id": "proj_churn",
+      "name": "Customer Churn Prediction",
+      "stack": "ML",
+      "bullets": [
+        {"id": "proj_churn_1", "text": "Built churn prediction model with ~90% accuracy", "tags": ["machine learning", "classification", "churn"]},
+        {"id": "proj_churn_2", "text": "Assessed performance using precision, recall, F1-score, and ROC-AUC and identified key churn drivers to support targeted retention strategies", "tags": ["model evaluation", "business insights", "retention"]}
+      ]
+    },
+    {
+      "id": "proj_sales",
+      "name": "Sales Analytics Dashboard",
+      "stack": "Power BI",
+      "bullets": [
+        {"id": "proj_sales_1", "text": "Designed interactive dashboards for KPI tracking, business insights and automated reporting workflows, saving weekly manual effort", "tags": ["power bi", "dashboards", "kpi", "automation"]}
+      ]
+    }
+  ],
+  "education": [
+    {"degree": "BTech. in Computer Engineering", "institution": "Pillai College of Engineering", "dates": "2023 – 2026"},
+    {"degree": "Diploma in Computer Technology", "institution": "Bharati Vidyapeeth", "dates": "2020 – 2023"}
+  ],
+  "certifications": [
+    "IBM – Python 101 for Data Science (Cognitive Class)",
+    "Deloitte – Data Analytics Simulation",
+    "Google Cloud – Career Launchpad Data Analytics",
+    "Quantium – Data Analytics Simulation"
+  ],
+  "key_traits": ["Growth Mindset", "Quick Learner", "Determined", "Full Ownership", "Strong Communication", "Team Player", "Flexible to Rotating Shifts"]
+}

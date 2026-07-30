@@ -1,0 +1,18 @@
+GenAI / ML Engineer — TechNova Analytics
+
+We're hiring a GenAI Engineer to join our data & AI team. You'll build LLM-powered
+tools using LangChain and RAG pipelines backed by vector databases (FAISS or similar),
+and work closely with our data science team on anomaly detection models for our
+fraud and compliance monitoring product.
+
+Requirements:
+- Strong Python and SQL skills
+- Experience with LangChain, RAG, prompt engineering, and vector search (FAISS)
+- Experience building or productionizing machine learning models (classification,
+  anomaly detection, or similar)
+- Comfort working with large transactional datasets
+- AWS experience is a plus
+- Power BI or similar dashboarding experience is a plus
+
+You'll be responsible for taking prototypes from notebook to production, automating
+reporting where possible, and collaborating with compliance stakeholders.

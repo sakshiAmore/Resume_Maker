@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <span class="seal">✒</span>
+    <div>
+      <h1>The Application Desk</h1>
+      <p class="subtitle">Paste a posting. Get a tailored resume, cover letter, and cold email — drawn only from your real record.</p>
+    </div>
+  </div>
+</div>
+
+<main class="layout">
+
+  <!-- LEFT: the intake blank -->
+  <section class="blank">
+    <div class="blank-label">Job Posting</div>
+    <form id="job-form">
+      <label class="field">
+        <span>Company</span>
+        <input type="text" name="company" placeholder="e.g. TechNova Analytics" autocomplete="off">
+      </label>
+      <label class="field">
+        <span>Role title</span>
+        <input type="text" name="role" placeholder="e.g. GenAI Engineer" autocomplete="off">
+      </label>
+      <label class="field field-jd">
+        <span>Job description</span>
+        <textarea name="jd_text" rows="14" placeholder="Paste the full job description here…" required></textarea>
+      </label>
+      <button type="submit" id="submit-btn">
+        <span class="btn-label">Draft my application</span>
+        <span class="btn-spinner" hidden></span>
+      </button>
+      <p class="hint">Runs against your local knowledge base. No data leaves this machine unless you've set an API key.</p>
+    </form>
+  </section>
+
+  <!-- RIGHT: pipeline + results -->
+  <section class="desk">
+    <ol class="stepper" id="stepper">
+      <li data-step="1"><span class="num">01</span><span class="label">Reading the posting</span></li>
+      <li data-step="2"><span class="num">02</span><span class="label">Retrieving matching experience</span></li>
+      <li data-step="3"><span class="num">03</span><span class="label">Drafting the resume</span></li>
+      <li data-step="4"><span class="num">04</span><span class="label">Writing the letter &amp; email</span></li>
+    </ol>
+
+    <div id="idle-note" class="idle-note">
+      Fill in the posting on the left and submit — the pipeline runs here.
+    </div>
+
+    <div id="error-box" class="error-box" hidden></div>
+
+    <div id="results" class="results" hidden>
+      <div class="mode-badge" id="mode-badge"></div>
+
+      <div class="doc-stack">
+        <a class="doc-card" id="card-resume" download>
+          <span class="doc-tag">Resume</span>
+          <span class="doc-name">.pdf</span>
+          <span class="doc-go">Download ↓</span>
+        </a>
+        <a class="doc-card" id="card-letter" download>
+          <span class="doc-tag">Cover Letter</span>
+          <span class="doc-name">.pdf</span>
+          <span class="doc-go">Download ↓</span>
+        </a>
+        <a class="doc-card" id="card-email" download>
+          <span class="doc-tag">Cold Email</span>
+          <span class="doc-name">.txt</span>
+          <span class="doc-go">Download ↓</span>
+        </a>
+      </div>
+
+      <details class="email-preview">
+        <summary>Preview the cold email</summary>
+        <pre id="email-text"></pre>
+      </details>
+
+      <details class="tracker-panel">
+        <summary>Application tracker</summary>
+        <div id="tracker-body" class="tracker-body"></div>
+      </details>
+
+      <details class="jd-analysis">
+        <summary>What the pipeline read from the posting</summary>
+        <dl id="jd-analysis-body"></dl>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
