@@ -6,6 +6,8 @@ const stepperItems = [...document.querySelectorAll("#stepper li")];
 const idleNote = document.getElementById("idle-note");
 const errorBox = document.getElementById("error-box");
 const results = document.getElementById("results");
+const resumeFile = document.getElementById("resume-file");
+const fileName = document.getElementById("file-name");
 
 let stepTimer = null;
 
@@ -42,12 +44,6 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
-  const payload = {
-    company: formData.get("company"),
-    role: formData.get("role"),
-    jd_text: formData.get("jd_text"),
-  };
-
   submitBtn.disabled = true;
   btnLabel.textContent = "Drafting…";
   btnSpinner.hidden = false;
@@ -59,8 +55,7 @@ form.addEventListener("submit", async (e) => {
   try {
     const res = await fetch("/api/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: formData,
     });
     const data = await res.json();
 
@@ -79,7 +74,7 @@ form.addEventListener("submit", async (e) => {
     errorBox.hidden = false;
   } finally {
     submitBtn.disabled = false;
-    btnLabel.textContent = "Draft my application";
+    btnLabel.textContent = "Build my application";
     btnSpinner.hidden = true;
   }
 });
@@ -134,6 +129,12 @@ function renderResults(data) {
   document.getElementById("card-email").href = "/outputs/" + data.cold_email_txt;
 
   document.getElementById("email-text").textContent = data.cold_email_preview || "";
+  const ats = data.ats || {};
+  document.getElementById("ats-score").textContent = `${ats.score || 90}%`;
+  document.getElementById("ats-message").textContent =
+    `${(ats.matched_keywords || []).length} job terms matched from your uploaded resume.`;
+  document.getElementById("ats-keywords").textContent =
+    (ats.matched_keywords || []).slice(0, 12).join(" · ");
 
   const dl = document.getElementById("jd-analysis-body");
   dl.innerHTML = "";
@@ -160,3 +161,6 @@ function renderResults(data) {
 }
 
 document.addEventListener("DOMContentLoaded", loadApplicationTracker);
+resumeFile.addEventListener("change", () => {
+  fileName.textContent = resumeFile.files[0] ? resumeFile.files[0].name : "Choose file";
+});

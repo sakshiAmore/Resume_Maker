@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Application Desk</title>
+<title>Resume Maker | ATS-ready applications</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/style.css">
@@ -12,10 +12,10 @@
 
 <div class="masthead">
   <div class="masthead-inner">
-    <span class="seal">✒</span>
+    <span class="seal">RM</span>
     <div>
-      <h1>The Application Desk</h1>
-      <p class="subtitle">Paste a posting. Get a tailored resume, cover letter, and cold email — drawn only from your real record.</p>
+      <h1>Resume Maker</h1>
+      <p class="subtitle">Upload your resume once. Resume Maker reads it, matches it to a role, and creates a focused application kit.</p>
     </div>
   </div>
 </div>
@@ -24,8 +24,14 @@
 
   <!-- LEFT: the intake blank -->
   <section class="blank">
-    <div class="blank-label">Job Posting</div>
+    <div class="blank-label">Create your application</div>
     <form id="job-form">
+      <label class="upload-zone" for="resume-file">
+        <span class="upload-icon">↑</span>
+        <span><strong>Upload your resume</strong><small>PDF, DOCX, or TXT · parsed locally</small></span>
+        <input id="resume-file" type="file" name="resume_file" accept=".pdf,.docx,.txt" required>
+        <span id="file-name" class="file-name">Choose file</span>
+      </label>
       <label class="field">
         <span>Company</span>
         <input type="text" name="company" placeholder="e.g. TechNova Analytics" autocomplete="off">
@@ -36,23 +42,23 @@
       </label>
       <label class="field field-jd">
         <span>Job description</span>
-        <textarea name="jd_text" rows="14" placeholder="Paste the full job description here…" required></textarea>
+        <textarea name="jd_text" rows="10" placeholder="Paste the full job description here…" required></textarea>
       </label>
       <button type="submit" id="submit-btn">
-        <span class="btn-label">Draft my application</span>
+        <span class="btn-label">Build my application</span>
         <span class="btn-spinner" hidden></span>
       </button>
-      <p class="hint">Runs against your local knowledge base. No data leaves this machine unless you've set an API key.</p>
+      <p class="hint">Your uploaded resume is used as the source of truth. No file is retained after parsing.</p>
     </form>
   </section>
 
   <!-- RIGHT: pipeline + results -->
   <section class="desk">
     <ol class="stepper" id="stepper">
-      <li data-step="1"><span class="num">01</span><span class="label">Reading the posting</span></li>
-      <li data-step="2"><span class="num">02</span><span class="label">Retrieving matching experience</span></li>
-      <li data-step="3"><span class="num">03</span><span class="label">Drafting the resume</span></li>
-      <li data-step="4"><span class="num">04</span><span class="label">Writing the letter &amp; email</span></li>
+      <li data-step="1"><span class="num">01</span><span class="label">Reading your resume</span></li>
+      <li data-step="2"><span class="num">02</span><span class="label">Matching the job</span></li>
+      <li data-step="3"><span class="num">03</span><span class="label">Optimizing ATS terms</span></li>
+      <li data-step="4"><span class="num">04</span><span class="label">Building your application kit</span></li>
     </ol>
 
     <div id="idle-note" class="idle-note">
@@ -63,6 +69,11 @@
 
     <div id="results" class="results" hidden>
       <div class="mode-badge" id="mode-badge"></div>
+      <div class="ats-card">
+        <div><span class="eyebrow">ATS optimization</span><strong id="ats-score">90%</strong></div>
+        <p id="ats-message">Your generated resume is optimized against the job description.</p>
+        <div class="keyword-list" id="ats-keywords"></div>
+      </div>
 
       <div class="doc-stack">
         <a class="doc-card" id="card-resume" download>

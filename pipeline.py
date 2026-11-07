@@ -20,6 +20,7 @@ from agents.resume_tailor import tailor_resume
 from agents.cover_letter_agent import generate_cover_letter
 from agents.cold_email_agent import generate_cold_email
 from application_tracker import append_application
+from resume_text_export import export_resume_text
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,28 +29,30 @@ def slugify(s: str) -> str:
     return re.sub(r"[^A-Za-z0-9]+", "_", s).strip("_") or "Untitled"
 
 
-def run(jd_text: str, company: str, role: str, outdir: str):
+def run(jd_text: str, company: str, role: str, outdir: str, resume_text: str = ""):
     os.makedirs(outdir, exist_ok=True)
 
-    print("→ Analyzing job description...")
+    print("Analyzing job description...")
     jd_analysis = analyze(jd_text)
     with open(os.path.join(outdir, "jd_analysis.json"), "w") as f:
         json.dump(jd_analysis, f, indent=2)
 
-    print("→ Retrieving relevant experience + tailoring resume...")
-    tailored = tailor_resume(jd_text)
+    print("Retrieving relevant experience + tailoring resume...")
+    tailored = tailor_resume(jd_text, resume_text=resume_text)
     resume_json_path = os.path.join(outdir, "resume_data.json")
     with open(resume_json_path, "w") as f:
         json.dump(tailored, f, indent=2)
 
-    print("→ Building one-page resume PDF...")
+    print("Building one-page resume PDF...")
     resume_pdf_path = os.path.join(outdir, f"Resume_{slugify(company)}_{slugify(role)}.pdf")
     subprocess.run(
         ["node", os.path.join(PROJECT_DIR, "resume_pdf_builder.js"), resume_json_path, resume_pdf_path],
         check=True,
     )
+    resume_txt_path = os.path.join(outdir, f"Resume_{slugify(company)}_{slugify(role)}.txt")
+    export_resume_text(tailored, resume_txt_path)
 
-    print("→ Generating cover letter...")
+    print("Generating cover letter...")
     letter = generate_cover_letter(jd_text, tailored, company=company, role_title=role)
     letter_txt_path = os.path.join(outdir, "cover_letter.txt")
     with open(letter_txt_path, "w") as f:
@@ -60,7 +63,7 @@ def run(jd_text: str, company: str, role: str, outdir: str):
         check=True,
     )
 
-    print("→ Generating cold email...")
+    print("Generating cold email...")
     email = generate_cold_email(jd_text, tailored, company=company, role_title=role)
     email_path = os.path.join(outdir, f"ColdEmail_{slugify(company)}_{slugify(role)}.txt")
     with open(email_path, "w") as f:
@@ -87,6 +90,7 @@ def run(jd_text: str, company: str, role: str, outdir: str):
         "cover_letter_pdf": letter_pdf_path,
         "cold_email_txt": email_path,
         "jd_analysis": jd_analysis,
+        "ats": tailored.get("ats", {}),
         "tracker_file": tracker_path,
     }
 

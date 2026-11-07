@@ -1,15 +1,15 @@
 :root {
-  --ink: #1E2A38;
-  --ink-soft: #4B5A6A;
-  --paper: #F1EFEA;
-  --paper-card: #FDFCFA;
-  --brass: #A8783A;
-  --brass-deep: #8A5F28;
-  --sage: #4F7860;
-  --rust: #A34D3D;
-  --line: #DAD5CB;
-  --shadow: 0 1px 2px rgba(30,42,56,0.06), 0 8px 24px rgba(30,42,56,0.06);
-  --radius: 3px;
+  --ink: #18212f;
+  --ink-soft: #657187;
+  --paper: #f5f7fb;
+  --paper-card: #ffffff;
+  --brass: #6254df;
+  --brass-deep: #473bc4;
+  --sage: #16866a;
+  --rust: #c24f5b;
+  --line: #e4e8f0;
+  --shadow: 0 12px 35px rgba(38, 45, 80, 0.08);
+  --radius: 14px;
 }
 
 * { box-sizing: border-box; }
@@ -29,22 +29,27 @@ h1, .doc-tag, .num {
 /* ---------- Masthead ---------- */
 
 .masthead {
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-card);
+  background: #10172a;
+  color: white;
+  border-bottom: 0;
 }
 
 .masthead-inner {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 36px 32px 30px;
+  padding: 38px 32px 34px;
   display: flex;
   gap: 20px;
   align-items: flex-start;
 }
 
 .seal {
-  font-size: 28px;
-  color: var(--brass);
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  background: var(--brass);
+  border-radius: 10px;
+  padding: 10px 8px;
   line-height: 1;
   padding-top: 4px;
 }
@@ -58,7 +63,7 @@ h1, .doc-tag, .num {
 
 .subtitle {
   margin: 0;
-  color: var(--ink-soft);
+  color: #b6bfd5;
   font-size: 15px;
   max-width: 52ch;
   line-height: 1.5;
@@ -67,12 +72,12 @@ h1, .doc-tag, .num {
 /* ---------- Layout ---------- */
 
 .layout {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 40px 32px 80px;
+  padding: 36px 32px 80px;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 36px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+  gap: 32px;
   align-items: start;
 }
 
@@ -87,17 +92,12 @@ h1, .doc-tag, .num {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 28px 28px 24px;
+  padding: 30px;
   position: relative;
 }
 
 .blank::before {
-  content: "";
-  position: absolute;
-  top: 14px; left: 14px; right: 14px; bottom: 14px;
-  border: 1px solid var(--line);
-  pointer-events: none;
-  border-radius: 2px;
+  display: none;
 }
 
 .blank-label {
@@ -128,8 +128,8 @@ h1, .doc-tag, .num {
   font-size: 14px;
   padding: 10px 12px;
   border: 1px solid var(--line);
-  border-radius: 2px;
-  background: #fff;
+  border-radius: 9px;
+  background: #fafbfe;
   color: var(--ink);
   resize: vertical;
 }
@@ -151,7 +151,7 @@ button#submit-btn {
   background: var(--ink);
   color: var(--paper-card);
   border: none;
-  border-radius: 2px;
+  border-radius: 9px;
   padding: 13px 16px;
   font-size: 14px;
   font-weight: 500;
@@ -286,6 +286,30 @@ button#submit-btn:disabled { opacity: 0.6; cursor: progress; }
   border-radius: 20px;
   margin-bottom: 18px;
 }
+
+.upload-zone {
+  min-height: 92px;
+  border: 1.5px dashed #b9b4f2;
+  border-radius: 11px;
+  background: #f7f6ff;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  cursor: pointer;
+}
+.upload-zone input { display: none; }
+.upload-zone strong, .upload-zone small { display: block; }
+.upload-zone small { color: var(--ink-soft); margin-top: 4px; font-size: 11px; }
+.upload-icon { font-size: 22px; color: var(--brass); }
+.file-name { margin-left: auto; color: var(--brass-deep); font-size: 12px; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ats-card { background: #f1f8f6; border: 1px solid #cce9df; border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+.ats-card > div:first-child { display: flex; justify-content: space-between; align-items: center; }
+.ats-card strong { color: var(--sage); font-size: 31px; }
+.eyebrow { color: var(--sage); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.ats-card p { color: var(--ink-soft); font-size: 12px; margin: 4px 0 10px; }
+.keyword-list { color: var(--sage); font-size: 11px; line-height: 1.6; }
 
 .mode-badge.llm {
   background: rgba(79,120,96,0.12);

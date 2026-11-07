@@ -8,9 +8,9 @@ function main() {
     process.exit(1);
   }
   const text = fs.readFileSync(inputPath, "utf8").trim();
-  const doc = new PDFDocument({ size: "LETTER", margins: { top: 54, bottom: 54, left: 62, right: 62 }, autoFirstPage: true });
+  const doc = new PDFDocument({ size: "A4", margins: { top: 54, bottom: 54, left: 60, right: 60 }, autoFirstPage: true });
   doc.pipe(fs.createWriteStream(outputPath));
-  doc.font("Times-Roman").fontSize(11).text(text, { width: 488, lineGap: 2, paragraphGap: 10 });
+  doc.font("Times-Roman").fontSize(10.8).text(text, { width: 475, lineGap: 1.8, paragraphGap: 8 });
   doc.end();
 }
 

@@ -1,9 +1,9 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
-const PAGE_WIDTH = 612;
-const PAGE_HEIGHT = 792;
-const MARGIN = 34;
+const PAGE_WIDTH = 595;
+const PAGE_HEIGHT = 842;
+const MARGIN = 36;
 const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
 
 function compactText(value) {
@@ -20,24 +20,24 @@ function groupedBullets(items) {
 }
 
 function drawHeader(doc, profile, fontSize) {
-  doc.font("Times-Bold").fontSize(fontSize + 5).text(compactText(profile.name), { align: "center" });
-  doc.font("Times-Roman").fontSize(fontSize - 1).text(
+  doc.font("Times-Bold").fontSize(fontSize + 4).text(compactText(profile.name), { align: "center" });
+  doc.font("Times-Roman").fontSize(fontSize - 1.2).text(
     `${compactText(profile.location)} | ${compactText(profile.phone)} | ${compactText(profile.email)}`,
     { align: "center" },
   );
 
   const links = `${compactText(profile.linkedin)} | ${compactText(profile.github)}`;
-  doc.fillColor("#1f4e79").text(links, { align: "center", underline: true });
+  doc.fillColor("#1f4e79").fontSize(fontSize - 1.4).text(links, { align: "center", underline: true });
   doc.fillColor("#111111");
-  doc.moveDown(0.25);
+  doc.moveDown(0.15);
   doc.moveTo(MARGIN, doc.y).lineTo(PAGE_WIDTH - MARGIN, doc.y).strokeColor("#777777").stroke();
-  doc.strokeColor("#000000").moveDown(0.35);
+  doc.strokeColor("#000000").moveDown(0.2);
 }
 
 function drawSection(doc, title, fontSize) {
-  doc.font("Times-Bold").fontSize(fontSize + 1).text(title.toUpperCase(), { characterSpacing: 0.2 });
+  doc.font("Times-Bold").fontSize(fontSize + 0.6).text(title.toUpperCase(), { characterSpacing: 0.2 });
   doc.moveTo(MARGIN, doc.y - 1).lineTo(PAGE_WIDTH - MARGIN, doc.y - 1).strokeColor("#777777").stroke();
-  doc.strokeColor("#000000").moveDown(0.18);
+  doc.strokeColor("#000000").moveDown(0.12);
 }
 
 function drawBullets(doc, items, fontSize) {
@@ -45,20 +45,20 @@ function drawBullets(doc, items, fontSize) {
     doc.font("Times-Roman").fontSize(fontSize).text(`• ${compactText(item)}`, {
       width: CONTENT_WIDTH - 8,
       indent: 8,
-      paragraphGap: 1,
+      paragraphGap: 0.8,
     });
   }
 }
 
 function renderResume(data, fontSize, outputPath) {
-  const doc = new PDFDocument({ size: "LETTER", margins: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN }, autoFirstPage: true });
+  const doc = new PDFDocument({ size: "A4", margins: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN }, autoFirstPage: true });
   const stream = fs.createWriteStream(outputPath);
   doc.pipe(stream);
   drawHeader(doc, data.profile, fontSize);
 
   drawSection(doc, "Professional Summary", fontSize);
-  doc.font("Times-Roman").fontSize(fontSize).text(compactText(data.summary), { width: CONTENT_WIDTH, paragraphGap: 1 });
-  doc.moveDown(0.3);
+  doc.font("Times-Roman").fontSize(fontSize).text(compactText(data.summary), { width: CONTENT_WIDTH, paragraphGap: 0.8 });
+  doc.moveDown(0.2);
 
   drawSection(doc, "Technical Skills", fontSize);
   for (const [category, items] of Object.entries(data.skills_full || {})) {
@@ -101,7 +101,7 @@ function main() {
     process.exit(1);
   }
   const data = JSON.parse(fs.readFileSync(inputPath, "utf8"));
-  renderResume(data, 7.4, outputPath);
+  renderResume(data, 7.1, outputPath);
 }
 
 main();

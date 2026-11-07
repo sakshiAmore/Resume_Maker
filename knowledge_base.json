@@ -7,7 +7,7 @@
     "linkedin": "https://www.linkedin.com/in/sakshi-more-223a44299",
     "github": "https://github.com/sakshiAmore"
   },
-  "summary_source": "Data Analyst and AI/ML Engineer with experience in data analytics, machine learning, and Generative AI. Proficient in Python, SQL, Power BI, and LLM-based frameworks, with a proven ability to build predictive models, deliver actionable insights, and develop AI-driven solutions. Skilled in leveraging data to support business decision-making, improve operational efficiency, and drive measurable outcomes.",
+  "summary_source": "Data Analyst and AI/ML Engineer with experience in data analysis, machine learning, predictive modeling, and Generative AI. Skilled in Python, SQL, Power BI, AWS, and LLM-based applications, with experience building anomaly detection, reporting, and RAG-based chatbot solutions that improve decision-making, compliance monitoring, and operational efficiency.",
   "skills": {
     "Languages": ["Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn)", "SQL", "PySpark (familiar)", "Hive (familiar)"],
     "Machine Learning": ["Logistic/Linear Regression", "Decision Trees", "Random Forest", "SVM", "KNN", "Gradient Boosting", "Clustering", "Isolation Forest"],
@@ -28,7 +28,7 @@
         {"id": "exp_idbi_1", "text": "Built anomaly detection models (Isolation Forest), improving fraud detection accuracy by 10–12%", "tags": ["machine learning", "anomaly detection", "fraud detection", "isolation forest", "AML"]},
         {"id": "exp_idbi_2", "text": "Reduced false positives by 12–15%, enhancing compliance monitoring efficiency", "tags": ["compliance", "model tuning", "AML", "risk"]},
         {"id": "exp_idbi_3", "text": "Processed 100K+ transactions using SQL and Python with RFM-based pipelines", "tags": ["SQL", "python", "data pipelines", "RFM", "large-scale data"]},
-        {"id": "exp_idbi_4", "text": "Automated reporting workflows, reducing manual effort by 40%", "tags": ["automation", "reporting", "efficiency"]}
+        {"id": "exp_idbi_4", "text": "Automated reporting workflows using Python and SQL, reducing manual effort by 40%", "tags": ["automation", "reporting", "efficiency", "python", "sql"]}
       ]
     },
     {
@@ -38,7 +38,7 @@
       "dates": "May 2024 – Jul 2024",
       "bullets": [
         {"id": "exp_unified_1", "text": "Analyzed 100K+ records using Python and SQL to extract actionable business insights", "tags": ["data analysis", "python", "SQL", "business insights"]},
-        {"id": "exp_unified_2", "text": "Developed Power BI dashboards for KPI tracking and performance monitoring", "tags": ["power bi", "dashboards", "kpi", "data visualization"]},
+        {"id": "exp_unified_2", "text": "Developed Power BI dashboards for KPI tracking, performance monitoring, and executive reporting", "tags": ["power bi", "dashboards", "kpi", "data visualization", "reporting"]},
         {"id": "exp_unified_3", "text": "Automated reporting pipelines, saving 10+ hours per week", "tags": ["automation", "reporting", "efficiency"]}
       ]
     },
