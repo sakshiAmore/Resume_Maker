@@ -59,7 +59,7 @@ For best results with ATS and OCR systems:
 
 The app reports an ATS optimization score and the matched terms used in the generated application. Scores are a transparent keyword guide, not a guarantee of any external ATS vendor's result.
 
-The uploaded resume is not used to permanently train or modify the language model. For uploaded resumes, the generated PDF preserves the uploaded text exactly; the job posting is used only for ATS matching and does not allow the model to invent or rewrite candidate facts.
+The uploaded resume is not used to permanently train or modify the language model. For each request, the model can reorder and rephrase verified resume lines to match the job, but it cannot add unsupported employers, dates, degrees, metrics, skills, or technologies. Invalid model output falls back to the uploaded content.
 
 ## GitHub push
 

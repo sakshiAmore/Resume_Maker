@@ -1,8 +1,8 @@
 import agents.resume_tailor as resume_tailor
 
 
-def test_uploaded_resume_uses_deterministic_fallback(monkeypatch):
-    monkeypatch.setattr(resume_tailor, "generate_json", lambda *args, **kwargs: {"error": "must not be called"})
+def test_uploaded_resume_falls_back_when_model_response_is_invalid(monkeypatch):
+    monkeypatch.setattr(resume_tailor, "generate_json", lambda *args, **kwargs: {"error": "invalid"})
 
     result = resume_tailor.tailor_resume(
         "Python data engineer",
@@ -11,4 +11,4 @@ def test_uploaded_resume_uses_deterministic_fallback(monkeypatch):
 
     assert result["_mode"] == "template"
     assert result["summary"]
-    assert result["source_resume_text"].startswith("Sakshi More")
+    assert result["experience_bullets"][0]["text"].startswith("Sakshi More")

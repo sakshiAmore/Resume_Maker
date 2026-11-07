@@ -71,11 +71,6 @@ function renderResume(data, fontSize, outputPath) {
   const doc = new PDFDocument({ size: "A4", margins: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN }, autoFirstPage: true });
   const stream = fs.createWriteStream(outputPath);
   doc.pipe(stream);
-  if (data.source_resume_text) {
-    renderUploadedResume(doc, data.source_resume_text, fontSize);
-    doc.end();
-    return;
-  }
   drawHeader(doc, data.profile, fontSize);
 
   drawSection(doc, "Professional Summary", fontSize);
@@ -90,18 +85,10 @@ function renderResume(data, fontSize, outputPath) {
   doc.moveDown(0.25);
 
   drawSection(doc, "Professional Experience", fontSize);
-  for (const bullets of groupedBullets(data.experience_bullets)) {
-    const header = compactText(bullets[0]).split(":")[0];
-    doc.font("Times-Bold").fontSize(fontSize).text(header, { paragraphGap: 1 });
-    drawBullets(doc, [compactText(bullets[0]).replace(`${header}:`, ""), ...bullets.slice(1)], fontSize);
-  }
+  drawBullets(doc, (data.experience_bullets || []).map((item) => item.text || item), fontSize);
 
   drawSection(doc, "Projects", fontSize);
-  for (const bullets of groupedBullets(data.project_bullets)) {
-    const header = compactText(bullets[0]).split(":")[0];
-    doc.font("Times-Bold").fontSize(fontSize).text(header, { paragraphGap: 1 });
-    drawBullets(doc, [compactText(bullets[0]).replace(`${header}:`, ""), ...bullets.slice(1)], fontSize);
-  }
+  drawBullets(doc, (data.project_bullets || []).map((item) => item.text || item), fontSize);
 
   drawSection(doc, "Education", fontSize);
   for (const education of data.education || []) {
