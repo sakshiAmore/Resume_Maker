@@ -42,10 +42,15 @@ def _profile_from_resume(text: str, fallback: dict) -> dict:
 
 
 def _template_result(resume_text: str, kb: dict, exp_chunks, proj_chunks, skill_chunks, reason: str = "") -> dict:
+    source_lines = [line.strip() for line in resume_text.splitlines() if line.strip()]
+    source_bullets = [
+        {"chunk_id": f"uploaded_{index}", "text": line}
+        for index, line in enumerate(source_lines)
+    ]
     result = {
         "summary": resume_text.strip()[:500] if resume_text.strip() else kb["summary_source"],
-        "experience_bullets": [{"chunk_id": c.id, "text": c.text} for c in exp_chunks],
-        "project_bullets": [{"chunk_id": c.id, "text": c.text} for c in proj_chunks],
+        "experience_bullets": source_bullets if resume_text.strip() else [{"chunk_id": c.id, "text": c.text} for c in exp_chunks],
+        "project_bullets": [] if resume_text.strip() else [{"chunk_id": c.id, "text": c.text} for c in proj_chunks],
         "highlighted_skills": [c.meta.get("category") for c in skill_chunks if c.meta.get("category")],
         "_mode": "template",
     }
@@ -78,7 +83,9 @@ def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 1
         f"Uploaded resume source (use this as the only candidate source):\n{source_text}\n\n"
         f"Retrieved candidate facts (only use these, cite chunk IDs):\n{retrieved_text}\n\n"
         'Return JSON: {"summary": str, "experience_bullets": [{"chunk_id": str, "text": str}], '
-        '"project_bullets": [{"chunk_id": str, "text": str}], "highlighted_skills": [str]}',
+        '"project_bullets": [{"chunk_id": str, "text": str}], "highlighted_skills": [str], '
+        '"education": [{"degree": str, "institution": str, "dates": str}], '
+        '"certifications": [str], "skills_full": {"category": [str]}}',
     )
 
     required_keys = {"summary", "experience_bullets", "project_bullets", "highlighted_skills"}
@@ -106,10 +113,10 @@ def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 1
 
     # Keep the existing document schema for compatibility with the PDF builder.
     result["profile"] = _profile_from_resume(resume_text, kb["profile"]) if resume_text.strip() else kb["profile"]
-    result["education"] = kb["education"]
-    result["certifications"] = kb["certifications"]
+    result["education"] = result.get("education") or kb["education"]
+    result["certifications"] = result.get("certifications") or kb["certifications"]
     result["key_traits"] = kb["key_traits"]
-    result["skills_full"] = kb["skills"]
+    result["skills_full"] = result.get("skills_full") or kb["skills"]
     result["ats"] = calculate_ats_score(
         "\n".join(item.get("text", "") for item in result.get("experience_bullets", []) + result.get("project_bullets", [])),
         jd_text,

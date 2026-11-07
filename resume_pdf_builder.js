@@ -13,8 +13,8 @@ function compactText(value) {
 function groupedBullets(items) {
   const groups = {};
   for (const item of items || []) {
-    const key = item.chunk_id.split("_").slice(0, 2).join("_");
-    (groups[key] = groups[key] || []).push(item.text);
+    const key = String(item.chunk_id || "resume").split("_").slice(0, 2).join("_");
+    (groups[key] = groups[key] || []).push(compactText(item.text));
   }
   return Object.values(groups);
 }
@@ -101,7 +101,7 @@ function main() {
     process.exit(1);
   }
   const data = JSON.parse(fs.readFileSync(inputPath, "utf8"));
-  renderResume(data, 7.1, outputPath);
+  renderResume(data, 9.2, outputPath);
 }
 
 main();
