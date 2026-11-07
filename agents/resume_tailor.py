@@ -84,14 +84,22 @@ def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 1
     required_keys = {"summary", "experience_bullets", "project_bullets", "highlighted_skills"}
     if result.get("mock"):
         result = _template_result(resume_text, kb, exp_chunks, proj_chunks, skill_chunks)
-    elif not required_keys.issubset(result) or not isinstance(result.get("summary"), str):
+    elif (
+        not isinstance(result, dict)
+        or not required_keys.issubset(result)
+        or not isinstance(result.get("summary"), str)
+        or not isinstance(result.get("experience_bullets"), list)
+        or not isinstance(result.get("project_bullets"), list)
+    ):
         result = _template_result(
             resume_text,
             kb,
             exp_chunks,
             proj_chunks,
             skill_chunks,
-            result.get("error", "The model returned incomplete resume data."),
+            result.get("error", "The model returned incomplete resume data.")
+            if isinstance(result, dict)
+            else "The model returned an invalid resume response.",
         )
     else:
         result["_mode"] = "llm"

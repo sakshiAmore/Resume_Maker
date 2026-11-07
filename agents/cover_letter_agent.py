@@ -11,10 +11,13 @@ SYSTEM = (
 
 
 def generate_cover_letter(jd_text: str, tailored_resume: dict, company: str = "", role_title: str = "") -> str:
+    summary = tailored_resume.get("summary", "")
+    experience_bullets = tailored_resume.get("experience_bullets", []) or []
+    project_bullets = tailored_resume.get("project_bullets", []) or []
     facts = (
-        f"Summary: {tailored_resume['summary']}\n"
-        f"Experience highlights: {[b['text'] for b in tailored_resume['experience_bullets']]}\n"
-        f"Project highlights: {[b['text'] for b in tailored_resume['project_bullets']]}\n"
+        f"Summary: {summary}\n"
+        f"Experience highlights: {[b.get('text', '') for b in experience_bullets]}\n"
+        f"Project highlights: {[b.get('text', '') for b in project_bullets]}\n"
     )
     prompt = (
         f"Job description:\n{jd_text}\n\n"
@@ -26,12 +29,12 @@ def generate_cover_letter(jd_text: str, tailored_resume: dict, company: str = ""
 
     if letter.startswith("[MOCK MODE"):
         # Template fallback so the pipeline still produces a usable draft
-        exp_line = tailored_resume["experience_bullets"][0]["text"] if tailored_resume["experience_bullets"] else ""
-        proj_line = tailored_resume["project_bullets"][0]["text"] if tailored_resume["project_bullets"] else ""
+        exp_line = experience_bullets[0].get("text", "") if experience_bullets else ""
+        proj_line = project_bullets[0].get("text", "") if project_bullets else ""
         letter = (
             f"[TEMPLATE MODE — set GROQ_API_KEY for a properly written letter]\n\n"
             f"I'm applying for the {role_title or '[Role]'} position at {company or '[Company]'}. "
-            f"{tailored_resume['summary']}\n\n"
+            f"{summary}\n\n"
             f"In my most recent role, {exp_line}. I've also {proj_line.lower()}.\n\n"
             f"I'd welcome the chance to bring this experience to {company or '[Company]'} and discuss "
             f"how it fits your team's current needs.\n\n"

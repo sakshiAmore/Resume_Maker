@@ -10,7 +10,8 @@ SYSTEM = (
 
 
 def generate_cold_email(jd_text: str, tailored_resume: dict, company: str = "", role_title: str = "") -> str:
-    facts = f"Top achievement: {tailored_resume['experience_bullets'][0]['text'] if tailored_resume['experience_bullets'] else ''}"
+    experience_bullets = tailored_resume.get("experience_bullets", []) or []
+    facts = f"Top achievement: {experience_bullets[0].get('text', '') if experience_bullets else ''}"
     prompt = (
         f"Job description:\n{jd_text}\n\nCompany: {company or 'the company'}\nRole: {role_title or 'the role'}\n\n"
         f"Verified candidate facts:\n{facts}\n\nWrite the email."
@@ -19,7 +20,7 @@ def generate_cold_email(jd_text: str, tailored_resume: dict, company: str = "", 
 
     if email.startswith("[MOCK MODE"):
         name = tailored_resume["profile"]["name"]
-        top = tailored_resume["experience_bullets"][0]["text"] if tailored_resume["experience_bullets"] else "relevant experience"
+        top = experience_bullets[0].get("text", "") if experience_bullets else "relevant experience"
         email = (
             f"[TEMPLATE MODE — set GROQ_API_KEY for a properly written email]\n\n"
             f"Subject: {role_title or 'Application'} — {name}\n\n"
