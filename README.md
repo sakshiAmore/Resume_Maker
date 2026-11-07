@@ -22,7 +22,7 @@ npm install
 C:/Users/Saksh/AppData/Local/Programs/Python/Python313/python.exe webapp/app.py
 ```
 
-Then open http://127.0.0.1:5050. Upload a PDF, DOCX, or TXT resume and paste the target job description. Company and role fields are optional.
+Then open http://127.0.0.1:5050. Upload a PDF, DOCX, or TXT resume and paste the complete job posting into the single text box. The company and role are extracted automatically.
 
 ## Run the pipeline from the terminal
 
@@ -34,8 +34,8 @@ With a real Groq key:
 
 ```powershell
 $env:GROQ_API_KEY = "your-key-here"
-# Optional: choose another active Groq model
-$env:GROQ_MODEL = "llama-3.1-8b-instant"
+# Optional: force a model available to your key
+$env:GROQ_MODEL = "openai/gpt-oss-20b"
 ```
 
 ## Output files

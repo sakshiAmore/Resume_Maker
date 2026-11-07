@@ -10,8 +10,13 @@ import json
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 KEY_FILE = os.path.join(PROJECT_DIR, "groq_api_key.txt")
-# Keep this overrideable because Groq periodically retires preview/production IDs.
-MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
+# Keep this overrideable. If unset, select an active model available to the key.
+MODEL = os.environ.get("GROQ_MODEL", "").strip()
+MODEL_PREFERENCES = (
+    "openai/gpt-oss-20b",
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+)
 
 
 def _api_key() -> str:
@@ -33,6 +38,19 @@ def _mock_response(system: str, prompt: str) -> str:
     )
 
 
+def _available_model(client) -> str:
+    available = {model.id for model in client.models.list().data}
+    if MODEL and MODEL in available:
+        return MODEL
+    for candidate in MODEL_PREFERENCES:
+        if candidate in available:
+            return candidate
+    raise RuntimeError(
+        "No supported Groq chat model is available for this API key. "
+        "Set GROQ_MODEL to one of the model IDs returned by https://api.groq.com/openai/v1/models."
+    )
+
+
 def generate(system: str, prompt: str, max_tokens: int = 1500) -> str:
     api_key = _api_key()
     if not api_key:
@@ -41,7 +59,7 @@ def generate(system: str, prompt: str, max_tokens: int = 1500) -> str:
     from openai import OpenAI
     client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
     resp = client.chat.completions.create(
-        model=MODEL,
+        model=_available_model(client),
         max_tokens=max_tokens,
         messages=[
             {"role": "system", "content": system},

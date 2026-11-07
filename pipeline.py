@@ -34,6 +34,8 @@ def run(jd_text: str, company: str, role: str, outdir: str, resume_text: str = "
 
     print("Analyzing job description...")
     jd_analysis = analyze(jd_text)
+    company = company or jd_analysis.get("company", "")
+    role = role or jd_analysis.get("role_title", "")
     with open(os.path.join(outdir, "jd_analysis.json"), "w") as f:
         json.dump(jd_analysis, f, indent=2)
 

@@ -32,23 +32,15 @@
         <input id="resume-file" type="file" name="resume_file" accept=".pdf,.docx,.txt" required>
         <span id="file-name" class="file-name">Choose file</span>
       </label>
-      <label class="field">
-        <span>Company</span>
-        <input type="text" name="company" placeholder="e.g. TechNova Analytics" autocomplete="off">
-      </label>
-      <label class="field">
-        <span>Role title</span>
-        <input type="text" name="role" placeholder="e.g. GenAI Engineer" autocomplete="off">
-      </label>
       <label class="field field-jd">
-        <span>Job description</span>
-        <textarea name="jd_text" rows="10" placeholder="Paste the full job description here…" required></textarea>
+        <span>Job posting details</span>
+        <textarea name="jd_text" rows="14" placeholder="Paste everything here — company name, role title, responsibilities, requirements, and qualifications…" required></textarea>
       </label>
       <button type="submit" id="submit-btn">
         <span class="btn-label">Build my application</span>
         <span class="btn-spinner" hidden></span>
       </button>
-      <p class="hint">Your uploaded resume is used as the source of truth. No file is retained after parsing.</p>
+      <p class="hint">Company and role are extracted automatically from this text. Your uploaded resume is used as the source of truth and is not retained after parsing.</p>
     </form>
   </section>
 
