@@ -50,10 +50,32 @@ function drawBullets(doc, items, fontSize) {
   }
 }
 
+function renderUploadedResume(doc, text, fontSize) {
+  for (const rawLine of String(text || "").split(/\r?\n/)) {
+    const line = compactText(rawLine);
+    if (!line) {
+      doc.moveDown(0.35);
+      continue;
+    }
+    const looksLikeHeading = line.length < 45 && (
+      /^[A-Z][A-Z\s&/]+$/.test(line) ||
+      /^(summary|profile|experience|education|skills|projects|certifications|objective)$/i.test(line)
+    );
+    doc.font(looksLikeHeading ? "Times-Bold" : "Times-Roman")
+      .fontSize(looksLikeHeading ? fontSize + 0.8 : fontSize)
+      .text(line, { width: CONTENT_WIDTH, paragraphGap: 1.5 });
+  }
+}
+
 function renderResume(data, fontSize, outputPath) {
   const doc = new PDFDocument({ size: "A4", margins: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN }, autoFirstPage: true });
   const stream = fs.createWriteStream(outputPath);
   doc.pipe(stream);
+  if (data.source_resume_text) {
+    renderUploadedResume(doc, data.source_resume_text, fontSize);
+    doc.end();
+    return;
+  }
   drawHeader(doc, data.profile, fontSize);
 
   drawSection(doc, "Professional Summary", fontSize);

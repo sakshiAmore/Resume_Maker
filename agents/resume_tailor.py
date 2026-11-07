@@ -77,6 +77,19 @@ def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 1
 
     retrieved_text = "\n".join(f"- [{c.id}] ({c.source}) {c.text}" for c in chunks)
 
+    if resume_text.strip():
+        # Uploaded resumes are preserved verbatim. The model must not rewrite
+        # candidate facts because even small unsupported changes are harmful.
+        result = _template_result(resume_text, kb, exp_chunks, proj_chunks, skill_chunks)
+        result["source_resume_text"] = resume_text.strip()
+        result["profile"] = _profile_from_resume(resume_text, kb["profile"])
+        result["education"] = []
+        result["certifications"] = []
+        result["key_traits"] = []
+        result["skills_full"] = {}
+        result["ats"] = calculate_ats_score(resume_text, jd_text, [])
+        return result
+
     result = generate_json(
         SYSTEM,
         f"Job description:\n{jd_text}\n\n"
