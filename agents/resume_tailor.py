@@ -41,6 +41,19 @@ def _profile_from_resume(text: str, fallback: dict) -> dict:
     return profile
 
 
+def _template_result(resume_text: str, kb: dict, exp_chunks, proj_chunks, skill_chunks, reason: str = "") -> dict:
+    result = {
+        "summary": resume_text.strip()[:500] if resume_text.strip() else kb["summary_source"],
+        "experience_bullets": [{"chunk_id": c.id, "text": c.text} for c in exp_chunks],
+        "project_bullets": [{"chunk_id": c.id, "text": c.text} for c in proj_chunks],
+        "highlighted_skills": [c.meta.get("category") for c in skill_chunks if c.meta.get("category")],
+        "_mode": "template",
+    }
+    if reason:
+        result["_generation_error"] = reason
+    return result
+
+
 def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 12, resume_text: str = "") -> dict:
     retriever = TfidfRetriever(kb_path)
     if resume_text.strip():
@@ -68,15 +81,18 @@ def tailor_resume(jd_text: str, kb_path: str = "knowledge_base.json", k: int = 1
         '"project_bullets": [{"chunk_id": str, "text": str}], "highlighted_skills": [str]}',
     )
 
+    required_keys = {"summary", "experience_bullets", "project_bullets", "highlighted_skills"}
     if result.get("mock"):
-        # Template fallback: use retrieved chunks verbatim (still ATS-relevant, just not JD-reworded)
-        result = {
-            "summary": resume_text.strip()[:500] if resume_text.strip() else kb["summary_source"],
-            "experience_bullets": [{"chunk_id": c.id, "text": c.text} for c in exp_chunks],
-            "project_bullets": [{"chunk_id": c.id, "text": c.text} for c in proj_chunks],
-            "highlighted_skills": [c.meta.get("category") for c in skill_chunks],
-            "_mode": "template",
-        }
+        result = _template_result(resume_text, kb, exp_chunks, proj_chunks, skill_chunks)
+    elif not required_keys.issubset(result) or not isinstance(result.get("summary"), str):
+        result = _template_result(
+            resume_text,
+            kb,
+            exp_chunks,
+            proj_chunks,
+            skill_chunks,
+            result.get("error", "The model returned incomplete resume data."),
+        )
     else:
         result["_mode"] = "llm"
 
