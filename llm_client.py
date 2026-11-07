@@ -10,7 +10,8 @@ import json
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 KEY_FILE = os.path.join(PROJECT_DIR, "groq_api_key.txt")
-MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+# Keep this overrideable because Groq periodically retires preview/production IDs.
+MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 
 
 def _api_key() -> str:
