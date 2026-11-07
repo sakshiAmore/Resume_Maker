@@ -156,6 +156,28 @@ function renderResults(data) {
     dl.appendChild(dd);
   }
 
+  const details = data.jd_analysis.job_details || {};
+  const detailsDl = document.getElementById("job-details-body");
+  detailsDl.innerHTML = "";
+  const detailRows = [
+    ["Company", jd.company],
+    ["Role", jd.role_title],
+    ["Experience required", details.experience],
+    ["Posted on", details.posted_date],
+    ["Application deadline", details.application_deadline],
+    ["Location", details.location],
+    ["Employment type", details.employment_type],
+  ];
+  for (const [label, value] of detailRows) {
+    if (!value) continue;
+    const dt = document.createElement("dt");
+    dt.textContent = label;
+    const dd = document.createElement("dd");
+    dd.textContent = value;
+    detailsDl.appendChild(dt);
+    detailsDl.appendChild(dd);
+  }
+
   results.hidden = false;
   loadApplicationTracker();
 }
