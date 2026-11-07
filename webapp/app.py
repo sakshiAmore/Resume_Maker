@@ -66,7 +66,7 @@ def generate():
 
     cold_email_text = ""
     try:
-        with open(result["cold_email_txt"]) as f:
+        with open(result["cold_email_txt"], encoding="utf-8") as f:
             cold_email_text = f.read()
     except OSError:
         pass
